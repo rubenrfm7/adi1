@@ -44,17 +44,9 @@ def revoke_token(token):
 @app.route('/token/<token>', methods=['GET'])
 def get_token_info(token):
     """Obtener información sobre un token"""
-    owner = request.headers.get('Owner')
-    if not owner:
-        return jsonify({"error": "Unauthorized: Owner header is missing"}), 401
-
     try:
-        # Primero verificamos si el token existe
+        # Verificamos si el token existe
         token_info = auth_service.get_token_info(token)
-
-        # Si el token existe, verificamos si el propietario coincide
-        if token_info['username'] != owner:
-            return jsonify({"error": "Unauthorized: You are not the owner of this token."}), 401
 
         return jsonify({"username": token_info['username'], "roles": token_info['roles']}), 200
     except Unauthorized:
