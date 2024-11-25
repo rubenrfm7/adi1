@@ -26,10 +26,9 @@ class AuthClient:
         else:
             return response.json()
 
-    def get_token_info(self, token,owner):
+    def get_token_info(self, token):
         url = f"{self.base_url}/token/{token}"
-        headers = {"Owner": owner}
-        response = requests.get(url,headers=headers)
+        response = requests.get(url)
         if response.status_code == 200:
             return response.json()
         else:
@@ -42,7 +41,7 @@ token_data = client.create_token("user1", "password_hash")
 print("Token creado:", token_data)
 
 # Obtener la información del token (con propietario)
-get_data = client.get_token_info(token_data['token'],"user1")
+get_data = client.get_token_info(token_data['token'])
 print("Información del token:", get_data)
 
 # Revocar el token
@@ -50,5 +49,5 @@ revoke_data = client.revoke_token(token_data['token'], "user1")
 print(revoke_data)
 
 # Intentar obtener la información del token después de revocar (debe fallar)
-get_data_after_revoke = client.get_token_info(token_data['token'],"user1")
+get_data_after_revoke = client.get_token_info(token_data['token'])
 print("Información del token después de revocar:", get_data_after_revoke)
