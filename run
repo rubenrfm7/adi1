@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Verificar si el contenedor ya está en ejecución
+if docker ps | grep -q token-container; then
+    echo "Error: El contenedor ya está en ejecución."
+    exit 1
+fi
+
+# Definir el directorio de almacenamiento
+STORAGE_FOLDER=${STORAGE_FOLDER:-$(pwd)/storage}
+
+# Crear el directorio de almacenamiento si no existe
+mkdir -p "$STORAGE_FOLDER"
+
+# Ejecutar el contenedor
+docker run --rm --name token-container \
+    -p 3002:3002 \
+    --cpus=1 \
+    --memory=2g \
+    -v "$STORAGE_FOLDER:/app/storage" \
+    token:latest
+
+if [ $? -eq 0 ]; then
+    echo "Contenedor finalizado"
+else
+    echo "Error al iniciar el contenedor."
+    exit 1
+fi

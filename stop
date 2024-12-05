@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Verificar si el contenedor está en ejecución
+if ! docker ps | grep -q token-container; then
+    echo "Error: No hay un contenedor en ejecución llamado 'token-container'."
+    exit 1
+fi
+
+# Detener el contenedor
+docker stop token-container
+
+if [ $? -eq 0 ]; then
+    echo "Contenedor detenido correctamente."
+else
+    echo "Error al detener el contenedor."
+    exit 1
+fi
