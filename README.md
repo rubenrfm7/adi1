@@ -1,26 +1,30 @@
 # adi1
 
-Para ejecutar el proyecto, en primero lugar es recomendable crear un entorno virtual.
+Ahora para ejecutar el proyecto utlizaremos docker, en primer lugar tenemos que dar permiso de ejecución a los tres scripsts.
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate  # En sistemas Unix (Linux/MacOS)
-venv\Scripts\activate     # En Windows
+chomod +x build run stop
 ```
 
-A continuación intalamos los requisitos:
+A continuación construimos la imagen de docker:
 
 ```bash
-pip install requirements.txt
+sudo ./build
 ```
 
-Ya podremos lanzar el servidor:
+Y ya podremos lanzar el servicio:
 
 ```bash
-python app.py
+sudo ./run
 ```
 
-He creado un cliente para probar las tres funcionalidades de la API(PUT,GET y DELETE):
+Si queremos finalizar el servicio tan solo deberemos ejecutar:
+
+```bash
+sudo ./run
+```
+
+Podemos comproabr el funcionamiento del servicio mediante client.py que ejecutatara las tres operaciones(PUT,GET y DELETE):
 
 ```bash
 python client.py
